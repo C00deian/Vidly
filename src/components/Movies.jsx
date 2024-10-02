@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { getMovies } from "../services/fakeMovieService";
-import { genres, getGenres } from "../services/fakeGenreService";
+import { getGenres } from "../services/fakeGenreService";
 import Like from "../common/Like";
 import Pagination from "./Pagination";
 import { paginate } from "../utils/paginate";
@@ -36,16 +36,25 @@ export default class Movies extends Component {
   };
 
   handelGenreSelect = (genre) => {
-    this.setState({selectedGenre:genre})
+    this.setState({ selectedGenre: genre });
   };
 
   render() {
     const { length: count } = this.state.movies;
-    const { pageSize, currentPage, movies: allMovies } = this.state;
+    const {
+      pageSize,
+      currentPage,
+      selectedGenre,
+      movies: allMovies,
+    } = this.state;
 
     if (count === 0) return <h5>There are no movies in the database.</h5>;
-    const movies = paginate(allMovies, currentPage, pageSize);
 
+    const filtered = selectedGenre
+      ? allMovies.filter((m) => m.genre._id === selectedGenre._id)
+      : allMovies;
+
+    const movies = paginate(filtered, currentPage, pageSize);
     return (
       <div className="row">
         <div className="col-3">
@@ -58,7 +67,9 @@ export default class Movies extends Component {
         <div className="col">
           <h5>
             Showing{" "}
-            <span className="text-light bg-primary px-1 rounded">{count}</span>{" "}
+            <span className="text-light bg-primary px-1 rounded">
+              {filtered.length}
+            </span>{" "}
             movies in the database.
           </h5>
           <table className="table">
@@ -98,7 +109,7 @@ export default class Movies extends Component {
             </tbody>
           </table>
           <Pagination
-            itemsCount={count}
+            itemsCount={filtered.length}
             pageSize={pageSize}
             onPageChange={this.handlePageChange}
             currentPage={currentPage}
