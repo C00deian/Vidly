@@ -4,6 +4,7 @@ import Like from "../common/Like";
 import Pagination from "./Pagination";
 import { paginate } from "../utils/paginate";
 
+
 export default class Movies extends Component {
   state = {
     movies: getMovies(),
