@@ -5,11 +5,13 @@ import Home from "./components/pages/Home";
 import Rentals from "./components/Pages/Rentals";
 import NoPage from "./components/pages/NoPage";
 import Navbar from "./components/Navbar";
+import MovieForm from "./components/Pages/MovieForm";
 // import './App.css'
 
 function App() {
   const routeCompnents = [
     { path: "/", elements: <Movies /> },
+    { path: "/movies/:id", elements: <MovieForm /> },
     { path: "*", elements: <NoPage /> },
     { path: "/home", elements: <Home /> },
     { path: "/customers", elements: <Customers /> },
