@@ -7,20 +7,31 @@ export default class Form extends Component {
     errors: {},
   };
 
-  validate = () => {
-    const { data } = this.state;
-    const options = { abortEarly: false };
-    const { error } = this.schema.validate(data, options);
+    validate = () => {
+        const { data } = this.state;
+        const options = { abortEarly: false };
+        const { error } = this.schema.validate(data, options);
 
-    //   check if result is falsy
-    if (!error) return null;
+        //   check if result is falsy
+        if (!error) return null;
 
-    //   check if result is truthy
-    const errors = {};
+        //   check if result is truthy
+        const errors = {};
 
-    for (let item of error.details) errors[item.path[0]] = item.message;
-    return errors;
-  };
+        for (let item of error.details) errors[item.path[0]] = item.message;
+        return errors;
+    };
+
+        
+    validateProperty = ({ name, value }) => {
+        const obj = { [name]: value };
+        // Extract the specific field from the schema
+        const fieldSchema = this.schema.extract(name);
+        const { error } = fieldSchema.validate(obj);
+    
+        return error ? error.details[0].message : null;
+      };
+
 
   handleSubmit = (e) => {
     e.preventDefault();

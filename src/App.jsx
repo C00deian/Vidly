@@ -7,6 +7,7 @@ import NoPage from "./components/pages/NoPage";
 import Navbar from "./components/Navbar";
 import MovieForm from "./components/Pages/MovieForm";
 import LoginForm from "./components/Pages/LoginForm";
+import RegisterForm from "./components/Pages/RegisterForm";
 // import './App.css'
 
 function App() {
@@ -15,9 +16,9 @@ function App() {
     { path: "/", elements: <Movies /> },
     { path: "/movies/:id", elements: <MovieForm /> },
     { path: "*", elements: <NoPage /> },
-    { path: "/home", elements: <Home /> },
     { path: "/customers", elements: <Customers /> },
     { path: "/rentals", elements: <Rentals /> },
+    { path: "/register", elements: <RegisterForm /> },
 
   ];
 
