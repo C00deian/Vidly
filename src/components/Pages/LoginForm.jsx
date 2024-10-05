@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import Input from "../../common/Input";
 import Joi from "joi";
+import Form from "../../common/Form";
 
-export default class LoginForm extends Component {
+export default class LoginForm extends Form {
   state = {
-    account: {
+    data: {
       username: "",
       password: "",
     },
@@ -24,30 +25,9 @@ export default class LoginForm extends Component {
       .label("Password"),
   });
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-
-    const errors = this.validate();
-    // console.log(errors);
-    this.setState({ errors: errors || {} });
-    if (errors) return;
-
-    // console.log("Submitted");
-  };
-
-  validate = () => {
-    const { account } = this.state;
-    const options = { abortEarly: false };
-    const { error } = this.schema.validate(account, options);
-
-    //   check if result is falsy
-    if (!error) return null;
-
-    //   check if result is truthy
-    const errors = {};
-
-    for (let item of error.details) errors[item.path[0]] = item.message;
-    return errors;
+  doSubmit = () => {
+    //call the server
+    console.log("submited");
   };
 
   validateProperty = ({ name, value }) => {
@@ -57,20 +37,8 @@ export default class LoginForm extends Component {
     return error ? error.details[0].message : null;
   };
 
-  handleChange = ({ currentTarget: input }) => {
-    const errors = { ...this.state.errors };
-    const errorsMessage = this.validateProperty(input);
-    if (errorsMessage) errors[input.name] = errorsMessage;
-    else delete errors[input.name];
-
-    const account = { ...this.state.account };
-    account[input.name] = input.value;
-
-    this.setState({ account, errors });
-  };
-
   render() {
-    const { account, errors } = this.state;
+    const { data, errors } = this.state;
 
     return (
       <div className="container">
@@ -78,7 +46,7 @@ export default class LoginForm extends Component {
         <form onSubmit={this.handleSubmit}>
           <Input
             name="username"
-            value={account.username}
+            value={data.username}
             onChange={this.handleChange}
             label="Username"
             error={errors.username}
@@ -86,7 +54,7 @@ export default class LoginForm extends Component {
 
           <Input
             name="password"
-            value={account.password}
+            value={data.password}
             onChange={this.handleChange}
             label="Password"
             error={errors.password}
