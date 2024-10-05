@@ -1,5 +1,6 @@
 import { Component } from "react";
 import Input from "./Input";
+import Select from "./Select";
 
 export default class Form extends Component {
   state = {
@@ -7,31 +8,29 @@ export default class Form extends Component {
     errors: {},
   };
 
-    validate = () => {
-        const { data } = this.state;
-        const options = { abortEarly: false };
-        const { error } = this.schema.validate(data, options);
+  validate = () => {
+    const { data } = this.state;
+    const options = { abortEarly: false };
+    const { error } = this.schema.validate(data, options);
 
-        //   check if result is falsy
-        if (!error) return null;
+    //   check if result is falsy
+    if (!error) return null;
 
-        //   check if result is truthy
-        const errors = {};
+    //   check if result is truthy
+    const errors = {};
 
-        for (let item of error.details) errors[item.path[0]] = item.message;
-        return errors;
-    };
+    for (let item of error.details) errors[item.path[0]] = item.message;
+    return errors;
+  };
 
-        
-    validateProperty = ({ name, value }) => {
-        const obj = { [name]: value };
-        // Extract the specific field from the schema
-        const fieldSchema = this.schema.extract(name);
-        const { error } = fieldSchema.validate(obj);
-    
-        return error ? error.details[0].message : null;
-      };
+  validateProperty = ({ name, value }) => {
+    const obj = { [name]: value };
+    // Extract the specific field from the schema
+    const fieldSchema = this.schema.extract(name);
+    const { error } = fieldSchema.validate(obj);
 
+    return error ? error.details[0].message : null;
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -73,4 +72,19 @@ export default class Form extends Component {
       />
     );
   };
+
+  renderSelect = (name, label, options) => {
+    const { data, errors } = this.state;
+
+    return (
+      <Select
+        name={name}
+        value={data[name]}
+        label={label}
+        options={options}
+        onChange={this.handleChange}
+        error={errors[name]}
+      />
+    )
+  }
 }

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function Navbar() {
   const routePage = [
-    { link: "/", name: "Movies" },
+    { link: "/movies", name: "Movies" },
     { link: "/customers", name: "Customers" },
     { link: "/rentals", name: "Rentals" },
     { link: "/login", name: "Login" },
