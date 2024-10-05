@@ -1,10 +1,9 @@
 import React from "react";
 
-function Input({ name, label, value, onChange }) {
+function Input({ name, label, value, onChange, error }) {
   return (
     <div className="form-group">
       <label htmlFor={name}>{label}</label>
-
       <input
         id={name}
         onChange={onChange}
@@ -13,6 +12,7 @@ function Input({ name, label, value, onChange }) {
         type="text"
         className="form-control"
       />
+      {error && <div className="alert alert-danger">{error}</div>}
     </div>
   );
 }
