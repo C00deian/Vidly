@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Input from "../../common/Input";
+import Joi from "joi";
 
 export default class LoginForm extends Component {
   state = {
@@ -9,35 +10,51 @@ export default class LoginForm extends Component {
     },
     errors: {},
   };
+
+  schema = Joi.object({
+    username: Joi.string()
+      .alphanum()
+      .min(3)
+      .max(30)
+      .required()
+      .label("Username"),
+
+    password: Joi.string()
+      .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
+      .label("Password"),
+  });
+
   handleSubmit = (e) => {
     e.preventDefault();
 
     const errors = this.validate();
-    console.log(errors);
+    // console.log(errors);
     this.setState({ errors: errors || {} });
     if (errors) return;
 
-    console.log("Submitted");
+    // console.log("Submitted");
   };
 
   validate = () => {
-    const errors = {};
     const { account } = this.state;
-    if (account.username.trim() === "")
-      errors.username = "Username is required.";
-    if (account.password.trim() === "")
-      errors.password = "Password is required.";
+    const options = { abortEarly: false };
+    const { error } = this.schema.validate(account, options);
 
-    return Object.keys(errors).length === 0 ? null : errors;
+    //   check if result is falsy
+    if (!error) return null;
+
+    //   check if result is truthy
+    const errors = {};
+
+    for (let item of error.details) errors[item.path[0]] = item.message;
+    return errors;
   };
 
   validateProperty = ({ name, value }) => {
-    if (name === "username") {
-      if (value.trim() === "") return "Username is required.";
-    }
-    if (name === "password") {
-      if (value.trim() === "") return "Password is required.";
-    }
+    const obj = { [name]: value };
+    //   [name]: to set property dynamically
+    const { error } = this.schema.extract(name).validate(obj);
+    return error ? error.details[0].message : null;
   };
 
   handleChange = ({ currentTarget: input }) => {
