@@ -1,4 +1,5 @@
 import { Component } from "react";
+import Input from "./Input";
 
 export default class Form extends Component {
   state = {
@@ -19,8 +20,7 @@ export default class Form extends Component {
 
     for (let item of error.details) errors[item.path[0]] = item.message;
     return errors;
-    };
-    
+  };
 
   handleSubmit = (e) => {
     e.preventDefault();
@@ -31,8 +31,7 @@ export default class Form extends Component {
     if (errors) return;
 
     this.doSubmit();
-    };
-    
+  };
 
   handleChange = ({ currentTarget: input }) => {
     const errors = { ...this.state.errors };
@@ -44,5 +43,23 @@ export default class Form extends Component {
     data[input.name] = input.value;
 
     this.setState({ data, errors });
+  };
+
+  renderButton = (label) => {
+    return <button className="btn btn-primary">{label}</button>;
+  };
+
+  renderInput = (name, label, type = "text") => {
+    const { data, errors } = this.state;
+    return (
+      <Input
+        type={type}
+        name={name}
+        value={data[name]}
+        onChange={this.handleChange}
+        label={label}
+        error={errors[name]}
+      />
+    );
   };
 }
