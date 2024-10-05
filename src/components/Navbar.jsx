@@ -7,6 +7,7 @@ function Navbar() {
     { link: "/home", name: "Home" },
     { link: "/customers", name: "Customers" },
     { link: "/rentals", name: "Rentals" },
+    { link: "/login", name: "Login" },
   ];
 
   return (
