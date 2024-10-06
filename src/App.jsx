@@ -8,7 +8,7 @@ import Navbar from "./components/Navbar";
 import MovieForm from "./components/Pages/MovieForm";
 import LoginForm from "./components/Pages/LoginForm";
 import RegisterForm from "./components/Pages/RegisterForm";
-import AddMovies from "./components/AddMovies";
+// import AddMovies from "./components/AddMovies";
 // import './App.css'
 
 function App() {
