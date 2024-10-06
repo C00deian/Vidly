@@ -3,7 +3,7 @@ import React from "react";
 function SearchBox({ value, onChange }) {
   return (
     <input
-      class="form-control my-3"
+      className="form-control my-3"
       type="text"
       name="query"
       placeholder="Search..."

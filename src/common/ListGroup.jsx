@@ -2,8 +2,8 @@ import React from "react";
 
 const ListGroup = ({
   items,
-  textProperty,
-  valueProperty,
+  textProperty = "name",
+  valueProperty = "_id",
   onItemSelect,
   selectedItem,
 }) => {
@@ -25,9 +25,5 @@ const ListGroup = ({
   );
 };
 
-ListGroup.defaultProps = {
-  textProperty: "name",
-  valueProperty: "_id",
-};
 
 export default ListGroup;
