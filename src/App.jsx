@@ -1,15 +1,17 @@
 import Movies from "./components/Movies";
 import {  Route, Routes,Navigate } from "react-router-dom";
 import Customers from "./components/Pages/Customers";
-import Home from "./components/pages/Home";
 import Rentals from "./components/Pages/Rentals";
 import NoPage from "./components/pages/NoPage";
 import Navbar from "./components/Navbar";
 import MovieForm from "./components/Pages/MovieForm";
 import LoginForm from "./components/Pages/LoginForm";
 import RegisterForm from "./components/Pages/RegisterForm";
-// import AddMovies from "./components/AddMovies";
-// import './App.css'
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import './App.css'
+
+
 
 function App() {
   const routeCompnents = [
@@ -20,12 +22,13 @@ function App() {
     { path: "/customers", elements: <Customers /> },
     { path: "/rentals", elements: <Rentals /> },
     { path: "/register", elements: <RegisterForm /> },
-    // { path: "/movies/new", elements: <AddMovies /> },
+
 
   ];
 
   return (
     <>
+      <ToastContainer/>
       <Navbar />
       <main className="container">
         <Routes>
