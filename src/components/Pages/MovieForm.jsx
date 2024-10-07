@@ -67,7 +67,7 @@ class MovieForm extends Form {
     dailyRentalRate: movie.dailyRentalRate,
   });
 
-  doSubmit = () => {
+  doSubmit = async() => {
     saveMovie(this.state.data);
     this.props.navigate("/"); // Redirect after saving
     console.log("Submitted Movie:", this.state.data);
