@@ -1,8 +1,8 @@
 import React from "react";
 import Joi from "joi";
 import Form from "../../common/Form";
-import { getGenres } from "../../services/fakeGenreService";
-import { getMovie, saveMovie } from "../../services/fakeMovieService";
+import { getGenres } from "../../services/genresService";
+import { getMovie ,saveMovie} from "../../services/movieService";
 import { useNavigate, useParams } from "react-router-dom";
 
 class MovieForm extends Form {
@@ -21,21 +21,33 @@ class MovieForm extends Form {
     _id: Joi.string(),
     title: Joi.string().required().label("Title"),
     genreId: Joi.string().required().label("Genre"),
-    numberInStock: Joi.number().min(0).max(100).required().label("Number in Stock"),
-    dailyRentalRate: Joi.number().min(0).max(10).required().label("Daily Rental Rate"),
+    numberInStock: Joi.number()
+      .min(0)
+      .max(100)
+      .required()
+      .label("Number in Stock"),
+    dailyRentalRate: Joi.number()
+      .min(0)
+      .max(10)
+      .required()
+      .label("Daily Rental Rate"),
   });
 
-  componentDidMount() {
+  async componentDidMount() {
     const { id } = this.props; // Get movie ID from props
-    const genres = getGenres();
+    const {data: genres} = await getGenres();
     this.setState({ genres });
 
     if (id === "new") return; // If creating a new movie
+try {
+  
+  const {data:movie} = await getMovie(id);
+  this.setState({ data: this.mapToModel(movie) });
 
-    const movie = getMovie(id);
-    if (!movie) return this.props.navigate("/not-found"); // Redirect if movie not found
-
-    this.setState({ data: this.mapToModel(movie) });
+} catch (err) {
+  if (err.response && err.response.status === 404)
+  this.props.navigate("/not-found"); 
+}
   }
 
   mapToModel = (movie) => ({
