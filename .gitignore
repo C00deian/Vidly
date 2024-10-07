@@ -12,7 +12,8 @@ dist
 dist-ssr
 *.local
 
-./services/fakeGenresServices
+/src/services/fakeGenreService.js
+/src/services/fakeMovieService.js
 
 
 # Editor directories and files
