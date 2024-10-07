@@ -1,9 +1,10 @@
 import http from "./httpService";
-const apiEndpoint = 'http://localhost:3030/api/movies'
+import { apiUrl } from "../config/config.json";
 
 export async function getMovies() {
-  return await http.get(apiEndpoint)
+    return await http.get(`${apiUrl}/movies`);
 }
 export async function deleteMovie(movieId) {
-   await http.delete(`${apiEndpoint}/${movieId}`)
+  await http.delete(`${apiUrl}/movies/${movieId}`);
+
 }
