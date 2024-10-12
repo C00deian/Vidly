@@ -3,7 +3,9 @@ import Joi from "joi";
 import Form from "../../common/Form";
 import { toast } from "react-toastify";
 import * as userService from '../../services/userService'
-export default class RegisterForm extends Form {
+import { useNavigate } from "react-router-dom";
+
+export class RegisterForm extends Form {
   state = {
     data: {
       username: "",
@@ -26,7 +28,10 @@ export default class RegisterForm extends Form {
   });
   doSubmit = async () => {
     try {
-      await userService.register(this.state.data);
+
+      const response = await userService.register(this.state.data);
+      localStorage.setItem('token', response.headers['x-auth-token'])
+      this.props.navigate('/');
       toast.success("Registration successful!");
       // Redirect or reset form here
     } catch (ex) {
@@ -57,5 +62,13 @@ export default class RegisterForm extends Form {
         </form>
       </div>
     );
-  }
+  } 
 }
+
+const RegisterFormWrapper = () => {
+  const navigate = useNavigate();
+  return <RegisterForm navigate={navigate} />;
+};
+
+export default RegisterFormWrapper;
+

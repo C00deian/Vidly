@@ -13,7 +13,7 @@ export class LoginForm extends Form {
       username: "",
       password: "",
     },
-    errors: {},
+    errors: {}, 
   };
 
   schema = Joi.object({
