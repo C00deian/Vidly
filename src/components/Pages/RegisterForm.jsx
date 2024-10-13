@@ -31,7 +31,7 @@ export class RegisterForm extends Form {
 
       const response = await userService.register(this.state.data);
       localStorage.setItem('token', response.headers['x-auth-token'])
-      this.props.navigate('/');
+      window.location = '/';
       toast.success("Registration successful!");
       // Redirect or reset form here
     } catch (ex) {

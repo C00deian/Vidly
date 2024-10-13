@@ -24,23 +24,19 @@ export class LoginForm extends Form {
       const { data } = this.state;
       const { data: jwt } = await login(data.username, data.password);
       localStorage.setItem("token", jwt);
-
-      // Call the onLogin prop to update the user state in the parent
-      this.props.onLogin(jwt); // Correctly call this.props.onLogin
-
-      this.props.navigate("/"); // Redirect after successful login
+      window.location = '/';
     } catch (ex) {
-      // Ensure errors object is initialized
-      const errors = { ...this.state.errors }; // Clone current errors state
+
+      const errors = { ...this.state.errors }; 
       if (ex.response) {
         if (ex.response.status === 400) {
-          // Assuming the server returns an error message for each field
+       
           for (const key in ex.response.data) {
             errors[key] = ex.response.data[key];
           }
           this.setState({ errors });
         } else if (ex.response.status === 404) {
-          errors.username = "User already registered."; // Set custom error message
+          errors.username = "User already registered."; 
           this.setState({ errors });
         } else {
           toast.error("An unexpected error occurred.");
@@ -66,9 +62,9 @@ export class LoginForm extends Form {
 }
 
 // Wrapper functional component
-const LoginFormWrapper = ({ onLogin }) => {
+const LoginFormWrapper = () => {
   const navigate = useNavigate();
-  return <LoginForm navigate={navigate} onLogin={onLogin} />;
+  return <LoginForm navigate={navigate}/>;
 };
 
 export default LoginFormWrapper;

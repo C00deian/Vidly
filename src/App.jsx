@@ -15,13 +15,14 @@ import "./App.css";
 import { useEffect, useState } from "react";
 
 function App() {
+
   const [user, setUser] = useState(null);
 
   useEffect(() => {
+
     try {
       const jwt = localStorage.getItem("token");
       const decodedUser = jwtDecode(jwt);
-      // console.log(decodedUser.name);
       setUser(decodedUser);
 
     } catch (error) {
@@ -30,15 +31,9 @@ function App() {
   }, [])
   
 
-  const handleLogin = (jwt) => {
-    localStorage.setItem('token', jwt);
-    const decodedUser = jwtDecode(jwt);
-    setUser(decodedUser); // Update user state
-  };
-
 
   const routeCompnents = [
-    { path: "/login", elements: <LoginForm onLogin={handleLogin}/> },
+    { path: "/login", elements: <LoginForm/> },
     { path: "/logout", elements: <Logout /> },
     { path: "/movies", elements: <Movies /> },
     { path: "/movies/:id", elements: <MovieForm /> },
