@@ -1,14 +1,22 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-function Navbar() {
+function Navbar({ user }) {
+
   const routePage = [
     { link: "/movies", name: "Movies" },
     { link: "/customers", name: "Customers" },
     { link: "/rentals", name: "Rentals" },
-    { link: "/login", name: "Login" },
-    { link: "/register", name: "Register" },
   ];
+
+  if (user) {
+    routePage.push({ link: "/logout", name: "Logout" });
+  } else {
+    routePage.push(
+      { link: "/login", name: "Login" },
+      { link: "/register", name: "Register" }
+    );
+  }
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -39,6 +47,13 @@ function Navbar() {
             );
           })}
         </ul>
+      </div>
+      <div>
+      {user && (
+          <span className="navbar-text ml-auto">
+            Welcome, {user.name}
+          </span>
+        )}
       </div>
     </nav>
   );

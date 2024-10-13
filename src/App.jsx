@@ -8,28 +8,38 @@ import Navbar from "./components/Navbar";
 import MovieForm from "./components/Pages/MovieForm";
 import LoginForm from "./components/Pages/LoginForm";
 import RegisterForm from "./components/Pages/RegisterForm";
+import Logout from "./components/Pages/Logout";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import { useEffect, useState } from "react";
 
 function App() {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     try {
       const jwt = localStorage.getItem("token");
       const decodedUser = jwtDecode(jwt);
-      setUser({ decodedUser });
-      
+      // console.log(decodedUser.name);
+      setUser(decodedUser);
+
     } catch (error) {
       
     }
-  },[])
+  }, [])
+  
+
+  const handleLogin = (jwt) => {
+    localStorage.setItem('token', jwt);
+    const decodedUser = jwtDecode(jwt);
+    setUser(decodedUser); // Update user state
+  };
 
 
   const routeCompnents = [
-    { path: "/login", elements: <LoginForm /> },
+    { path: "/login", elements: <LoginForm onLogin={handleLogin}/> },
+    { path: "/logout", elements: <Logout /> },
     { path: "/movies", elements: <Movies /> },
     { path: "/movies/:id", elements: <MovieForm /> },
     { path: "/not-found", elements: <NoPage /> },

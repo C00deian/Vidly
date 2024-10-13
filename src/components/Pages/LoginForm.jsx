@@ -5,33 +5,30 @@ import { login } from "../../services/authServices";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-
-
 export class LoginForm extends Form {
   state = {
     data: {
       username: "",
       password: "",
     },
-    errors: {}, 
+    errors: {},
   };
 
   schema = Joi.object({
     username: Joi.string().min(3).required().label("Username"),
-
-    password: Joi.string()
-      // .pattern(new RegExp("^[a-zA-Z0-9]{3,30}$"))
-      .label("Password"),
+    password: Joi.string().label("Password"),
   });
 
   doSubmit = async () => {
-
     try {
       const { data } = this.state;
       const { data: jwt } = await login(data.username, data.password);
-      localStorage.getItem("token", jwt);
-      this.props.navigate("/")
-    
+      localStorage.setItem("token", jwt);
+
+      // Call the onLogin prop to update the user state in the parent
+      this.props.onLogin(jwt); // Correctly call this.props.onLogin
+
+      this.props.navigate("/"); // Redirect after successful login
     } catch (ex) {
       // Ensure errors object is initialized
       const errors = { ...this.state.errors }; // Clone current errors state
@@ -52,7 +49,6 @@ export class LoginForm extends Form {
         toast.error("Network error: Unable to connect to the server.");
       }
     }
-    //call the server
   };
 
   render() {
@@ -69,11 +65,10 @@ export class LoginForm extends Form {
   }
 }
 
-
 // Wrapper functional component
-const LoginFormWrapper = () => {
+const LoginFormWrapper = ({ onLogin }) => {
   const navigate = useNavigate();
-  return <LoginForm navigate={navigate} />;
+  return <LoginForm navigate={navigate} onLogin={onLogin} />;
 };
 
 export default LoginFormWrapper;
