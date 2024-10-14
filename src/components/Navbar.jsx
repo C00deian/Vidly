@@ -2,21 +2,18 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Navbar({ user }) {
-
   const routePage = [
     { link: "/movies", name: "Movies" },
     { link: "/customers", name: "Customers" },
     { link: "/rentals", name: "Rentals" },
   ];
 
-  if (user) {
-    routePage.push({ link: "/logout", name: "Logout" });
-  } else {
-    routePage.push(
-      { link: "/login", name: "Login" },
-      { link: "/register", name: "Register" }
-    );
-  }
+  user
+    ? routePage.push({ link: "/logout", name: "Logout" })
+    : routePage.push(
+        { link: "/login", name: "Login" },
+        { link: "/register", name: "Register" }
+      );
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -37,7 +34,7 @@ function Navbar({ user }) {
 
       <div className="collapse navbar-collapse" id="navbarSupportedContent">
         <ul className="navbar-nav mr-auto">
-          {routePage.map((page,index) => {
+          {routePage.map((page, index) => {
             return (
               <li className="nav-item" key={index}>
                 <Link className="nav-link" to={page.link}>
@@ -49,9 +46,10 @@ function Navbar({ user }) {
         </ul>
       </div>
       <div>
-      {user && (
+        {user && (
           <span className="navbar-text ml-auto">
-            Welcome, <strong className="font-bold text-info">{user.name}</strong>
+            Welcome,{" "}
+            <strong className="font-bold text-info">{user.name}</strong>
           </span>
         )}
       </div>

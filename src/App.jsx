@@ -30,7 +30,7 @@ function App() {
   const routeCompnents = [
     { path: "/login", elements: <LoginForm/> },
     { path: "/logout", elements: <Logout /> },
-    { path: "/movies", elements: <Movies /> },
+    { path: "/movies", elements: <Movies user={user} /> },
     { path: "/movies/:id", elements: <MovieForm /> },
     { path: "/not-found", elements: <NoPage /> },
     { path: "/customers", elements: <Customers /> },

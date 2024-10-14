@@ -99,7 +99,7 @@ export default class Movies extends Component {
   render() {
     const { length: count } = this.state.movies;
     const { pageSize, currentPage, sortColumn, searchQuery } = this.state;
-
+    const { user } = this.props;
     if (count === 0) return <h5>There are no movies in the database.</h5>;
     const { totalCount, data: movies } = this.getPageData();
     return (
@@ -111,14 +111,15 @@ export default class Movies extends Component {
             selectedItem={this.state.selectedGenre}
           />
         </div>
+
         <div className="col">
-          <Link
+      { user &&  <Link
             to="/movies/new"
             className="btn btn-primary"
             style={{ marginBottom: "16px" }}
           >
             New Movie
-          </Link>
+          </Link> }
 
           <h5 className="mb-3">
             Showing{" "}
