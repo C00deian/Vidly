@@ -51,7 +51,7 @@ function Navbar({ user }) {
       <div>
       {user && (
           <span className="navbar-text ml-auto">
-            Welcome, {user.name}
+            Welcome, <strong className="font-bold text-info">{user.name}</strong>
           </span>
         )}
       </div>

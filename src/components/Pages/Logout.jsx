@@ -1,19 +1,17 @@
 import React, { Component } from 'react';
-
+import auth from '../../services/authServices'
 
 class Logout extends Component {
-  componentDidMount() {
-    // Clear the token from localStorage
-    localStorage.removeItem('token'); // or use localStorage.clear() to clear all items
 
-    // Navigate to the home page
+  componentDidMount() {
+    auth.logout();
     window.location = '/';
+
   }
 
   render() {
-    return null; // Render nothing while redirecting
+    return null;
   }
 }
 
-// Wrap the component with withRouter to access history prop
 export default Logout;

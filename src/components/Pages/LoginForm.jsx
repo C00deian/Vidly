@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Joi from "joi";
 import Form from "../../common/Form";
-import { login } from "../../services/authServices";
+import  auth  from "../../services/authServices";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
@@ -22,8 +22,7 @@ export class LoginForm extends Form {
   doSubmit = async () => {
     try {
       const { data } = this.state;
-      const { data: jwt } = await login(data.username, data.password);
-      localStorage.setItem("token", jwt);
+      await auth.login(data.username, data.password);
       window.location = '/';
     } catch (ex) {
 
