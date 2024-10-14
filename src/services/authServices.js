@@ -44,8 +44,7 @@ export function getCurrentUser() {
 }
 
 
-export function getJwt() {
-  console.log(localStorage.getItem(tokenKey)); 
+export function getJwt() { 
   return localStorage.getItem(tokenKey);
 }
 

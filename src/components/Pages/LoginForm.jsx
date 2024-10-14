@@ -23,7 +23,7 @@ export class LoginForm extends Form {
     try {
       const { data } = this.state;
       await auth.login(data.username, data.password);
-      window.location = '/';
+      window.location = '/movies';
     } catch (ex) {
 
       const errors = { ...this.state.errors }; 
@@ -47,6 +47,7 @@ export class LoginForm extends Form {
   };
 
   render() {
+
     return (
       <div className="container">
         <h1>Login</h1>

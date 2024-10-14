@@ -24,7 +24,6 @@ function App() {
   }, []);
 
   const routeComponents = [
-  
     { path: "/login", element: <LoginForm /> },
     { path: "/logout", element: <Logout /> },
     { path: "/movies", element: <Movies user={user} />, protected: true },
@@ -42,8 +41,10 @@ function App() {
       <main className="container">
         <Routes>
           {/* Default route */}
-          <Route path="/" element={<Navigate to="/movies" replace />} />
-
+          <Route
+            path="/login"
+            element={user ? <Navigate to="/movies" replace /> : <LoginForm />}
+          />
           {/* Map through route components */}
           {routeComponents.map((route, index) =>
             route.protected ? (
