@@ -26,7 +26,7 @@ function App() {
   const routeComponents = [
     { path: "/login", element: <LoginForm /> },
     { path: "/logout", element: <Logout /> },
-    { path: "/movies", element: <Movies user={user} />, protected: true },
+    { path: "/movies", element: <Movies user={user} /> },
     { path: "/movies/:id", element: <MovieForm />, protected: true },
     { path: "/not-found", element: <NoPage /> },
     { path: "/customers", element: <Customers />, protected: true },
