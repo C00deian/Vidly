@@ -8,34 +8,31 @@ import MovieForm from "./components/Pages/MovieForm";
 import LoginForm from "./components/Pages/LoginForm";
 import RegisterForm from "./components/Pages/RegisterForm";
 import Logout from "./components/Pages/Logout";
-import auth from './services/authServices'
+import auth from "./services/authServices";
+import ProtectedRoute from "./Protect-Routes/Protected";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./App.css";
 import { useEffect, useState } from "react";
 
 function App() {
-
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-
     const currentUser = auth.getCurrentUser();
     setUser(currentUser);
-    
-  }, [])
+  }, []);
+
+  const routeComponents = [
   
-
-
-  const routeCompnents = [
-    { path: "/login", elements: <LoginForm/> },
-    { path: "/logout", elements: <Logout /> },
-    { path: "/movies", elements: <Movies user={user} /> },
-    { path: "/movies/:id", elements: <MovieForm /> },
-    { path: "/not-found", elements: <NoPage /> },
-    { path: "/customers", elements: <Customers /> },
-    { path: "/rentals", elements: <Rentals /> },
-    { path: "/register", elements: <RegisterForm /> },
+    { path: "/login", element: <LoginForm /> },
+    { path: "/logout", element: <Logout /> },
+    { path: "/movies", element: <Movies user={user} />, protected: true },
+    { path: "/movies/:id", element: <MovieForm />, protected: true },
+    { path: "/not-found", element: <NoPage /> },
+    { path: "/customers", element: <Customers />, protected: true },
+    { path: "/rentals", element: <Rentals />, protected: true },
+    { path: "/register", element: <RegisterForm /> },
   ];
 
   return (
@@ -44,10 +41,25 @@ function App() {
       <Navbar user={user} />
       <main className="container">
         <Routes>
+          {/* Default route */}
           <Route path="/" element={<Navigate to="/movies" replace />} />
-          {routeCompnents.map((route, index) => (
-            <Route path={route.path} element={route.elements} key={index} />
-          ))}
+
+          {/* Map through route components */}
+          {routeComponents.map((route, index) =>
+            route.protected ? (
+              <Route
+                key={index}
+                path={route.path}
+                element={
+                  <ProtectedRoute user={user}>{route.element}</ProtectedRoute>
+                }
+              />
+            ) : (
+              <Route key={index} path={route.path} element={route.element} />
+            )
+          )}
+
+          {/* Catch-all route */}
           <Route path="*" element={<Navigate to="/not-found" replace />} />
         </Routes>
       </main>
