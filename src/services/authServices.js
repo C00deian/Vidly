@@ -41,6 +41,12 @@ export function getCurrentUser() {
 }
 
 
+export function getJwt() {
+  console.log(localStorage.getItem(tokenKey)); 
+  return localStorage.getItem(tokenKey);
+}
+
+
 
 
 
@@ -48,5 +54,6 @@ export default {
   login,
   logout,
   getCurrentUser,
-  loginWithJwt
+  loginWithJwt,
+  getJwt
 }
