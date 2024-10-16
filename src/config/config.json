@@ -1,3 +1,5 @@
 {
-    "apiUrl": "http://localhost:3030/api"
+
+ "apiUrl" :"https://vidly-app-1.onrender.com/api"
+
 }

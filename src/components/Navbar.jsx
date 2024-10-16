@@ -17,7 +17,7 @@ function Navbar({ user }) {
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
-      <Link className="navbar-brand" to="/">
+      <Link className="navbar-brand" to="/movies">
         Vidly
       </Link>
       <button
